@@ -1,33 +1,15 @@
-@ Return to the level entrance instead of Castle Floor 1 
-@ r0 and r1 are level_id and entrance_id of the to be loaded level, if loading to the default castle floor 1 entrance (id 0) change the NEXT_LEVEL_ID and NEXT_ENTRANCE_ID to the ones stored in HUB_LEVEL_ID and HUB_ENTRANCE_ID
-@ This doesnt always get called when loading a level but it does always get called when pressing Exit Course
+@ Thanks to Pants64 for the first hook address (0x02029378)
 
-nsub_0202ACC0:
-	@ If player is not warping to the default entrance
-	cmp r0, #0x2
-	bne exit_code_0202ACC0
-	cmp r1, #0x0
-	bne exit_code_0202ACC0
-	
-	@ Check current level id (before the warp), if you are currently in a hub area, exit code
-	ldr r0, =0x0209f2f8				@ Load address of LEVEL_ID in r0
-	ldrb r0, [r0]					@ Load value of LEVEL_ID in r0
-	push {r14}
-	bl 0x02013558					@ Load ACT_SELECTOR_ID of LEVEL_ID in r0: SubLevelToLevel(r0)
-	pop {r14}
-	cmp r0, #0x1D					@ ACT_SELECTOR_ID == 0x1D (29: HUB)
-	beq exit_code_0202ACC0			@ If true, exit code
-	
+@ Return to the hub level entrance instead of Castle Floor 1 
+@ Exit level: r0
+@ Exit entrance: r1
+nsub_02029378:
 	@ Warp player to next hub level and entrance
 	ldr r0, =HUB_LEVEL_ID
 	ldrb r0, [r0]
 	ldr r1, =HUB_ENTRANCE_ID
 	ldrb r1, [r1]
-	b exit_code_0202ACC0
-	
-	exit_code_0202ACC0:
-	push {r14}   @ execute original instruction
-	b 0x0202acc4 @   go to the next instruction
+	b 0x0202937c @   go to the next instruction
 
 @ Hook when entering exit, save HUB entrance and level here if level hub
 @ Safe: r0 and r1
