@@ -15,4 +15,4 @@ repl_020af324_ov_02:
 	push {r14}
 	bl 0x020d8e70			@ Player::Hurt
 	pop {r14}
-	bx r14	@ exit hook
+	bx r14					@ exit hook
