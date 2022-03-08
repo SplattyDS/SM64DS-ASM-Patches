@@ -12,7 +12,4 @@ repl_020af324_ov_02:
 	mov r3, #0x0c000		@ speed: 0x0c000
 	mov r2, #0x8			@ damage: 8
 	add r1, r0, #0x5c		@ source: player->pos
-	push {r14}
-	bl 0x020d8e70			@ Player::Hurt
-	pop {r14}
-	bx r14					@ exit hook
+	b 0x020d8e70			@ Player::Hurt
