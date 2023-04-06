@@ -2,4 +2,4 @@
 
 nsub_020c7bb8:
 	cmp r0, r0		@ force condition flag to true, cmp r0 #0x4 forces it to false in case you want no one to have Wings in the ? Switch level
-	b 020c7bbc
+	b 0x020c7bbc
